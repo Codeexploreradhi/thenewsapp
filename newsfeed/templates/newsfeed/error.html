@@ -1,0 +1,19 @@
+{% extends "newsfeed/base.html" %}
+{% load staticfiles %}
+{% block menu %}
+    <ul>
+        <li><a href='/'>Read News</a></li>
+        <li><a href='/keywords'>Trending</a></li>
+        <li><a href='/about'>About</a></li>
+        <li><a href='/sources'>Sources</a></li>
+    </ul>
+{% endblock %}
+{% block headerTitle %}{{ errorCode }}{% endblock %}
+{% block title %}{{ errorCode }}{% endblock %}
+
+{% block content %}
+    {% include "newsfeed/search.html" %}
+
+    <br/>
+    {{ errorMessage }}<br/>
+{% endblock %}

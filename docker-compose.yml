@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+
+  mongodb:
+    build: docker/mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+
+  news:
+    build: .
+    command: sh run_app.sh
+    volumes:
+      - .:/app
+    depends_on:
+      - mongodb
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb

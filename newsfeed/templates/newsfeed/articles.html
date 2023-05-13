@@ -1,0 +1,50 @@
+
+{% extends "newsfeed/base.html" %}
+{% load staticfiles %}
+{% block menu %}
+    <ul>
+        <li class='fh5co-active'><a href='/'>Read News</a></li>
+        <li><a href='/keywords'>Trending</a></li>
+        <li><a href='/about'>About</a></li>
+        <li><a href='/sources'>Sources</a></li>
+    </ul>
+{% endblock %}
+
+{% block headerTitle %}{{ keywords }}{% endblock %}
+{% block title %}{{ keywords }}{% endblock %}
+
+{% block content %}
+    {% if articles %}
+        {% for article in articles %}
+        <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+            <h3 class="fh5co-heading">
+                <a href="{{ article.link }}" target="_blank">
+                    {{ article.title }}
+                </a>&nbsp;
+                {% if article.polarity > 0 %}
+                    <i class="fa fa-plus-circle" style="font-size:16px; color:green"></i>
+                    {{ article.polarity }}%
+                {% endif %}
+                {% if article.polarity < 0 %}
+                    <i class="fa fa-minus-circle" style="font-size:16px; color:red"></i>
+                    {{ article.polarity }}%
+                {% endif %}
+            </h3>
+            {% if article.image %}
+                <a href="{{ article.link }}" target="_blank">
+                    <img src="{{article.image}}" width="275" height="275" class='img-responsive' />
+                </a><br/>
+            {% endif %}
+            <p>{{ article.html|safe }}</p>
+        </div>
+        <div class="col-md-12"><hr /></div>
+        {% endfor %}
+    {% else %}
+        <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+            <h3 class="fh5co-heading">
+                No articles found
+            </h3>
+        </div>
+    {% endif %}
+
+{% endblock %}

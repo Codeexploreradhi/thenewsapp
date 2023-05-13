@@ -1,0 +1,47 @@
+
+{% extends "newsfeed/base.html" %}
+{% load staticfiles %}
+{% block menu %}
+    <ul>
+        <li class='fh5co-active'><a href='/'>Read News</a></li>
+        <li><a href='/keywords'>Trending</a></li>
+        <li><a href='/about'>About</a></li>
+        <li><a href='/sources'>Sources</a></li>
+    </ul>
+{% endblock %}
+{% block headerTitle %}News{% endblock %}
+{% block title %}Read News{% endblock %}
+
+{% block content %}
+    {% include "newsfeed/search.html" %}
+    {% for topic in topics %}
+    <div class='col-md-6 col-sm-6 col-padding animate-box' data-animate-effect='fadeInLeft'>
+        <div class='blog-entry'>
+            <a href='/topics/{{ topic.index }}' class='blog-img'>
+                <img width="500" height="400" src='{{ topic.image }}' class='img-responsive'></a>
+            <div class='desc'>
+                <h3><a href='/topics/{{ topic.index }}'>{{ topic.keywords }}</a>
+                </h3>
+                {% if topic.title and topic.url %}
+                    <p>
+                        <a href="{{ topic.url }}" target="_blank">{{ topic.title }}</a>
+                        &nbsp;&nbsp;
+                        {% if topic.polarity > 0 %}
+                            <i class="fa fa-plus-circle" style="font-size:16px; color:green"></i>
+                            {{ topic.polarity }}%
+                        {% endif %}
+                        {% if topic.polarity < 0 %}
+                            <i class="fa fa-minus-circle" style="font-size:16px; color:red"></i>
+                            {{ topic.polarity }}%
+                        {% endif %}
+                    </p>
+                {% endif %}
+                <p>
+                    <a href='/topics/{{ topic.index }}' class='lead'>
+                        View Articles <i class='icon-arrow-right3'></i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

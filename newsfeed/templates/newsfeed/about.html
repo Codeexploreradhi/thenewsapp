@@ -1,0 +1,68 @@
+{% extends "newsfeed/base.html" %}
+{% load staticfiles %}
+
+{% block menu %}
+    <ul>
+        <li><a href='/'>Read News</a></li>
+        <li><a href='/keywords'>Trending</a></li>
+        <li class='fh5co-active'><a href='/about'>About</a></li>
+        <li><a href='/sources'>Sources</a></li>
+    </ul>
+{% endblock %}
+{% block headerTitle %}About{% endblock %}
+{% block title %}About{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <p>
+            <b>Specious News</b> uses
+            <a href="https://en.wikipedia.org/wiki/K-means_clustering" target="_blank">k-means clustering</a>
+            to learn about topics from news articles based on their similarities.
+        </p>
+        <p>
+            Topics and articles are examined using
+            <a href="https://en.wikipedia.org/wiki/Sentiment_analysis" target="_blank">
+                sentiment analysis
+            </a> to determine if they convey a positive or negative attitude.
+            The &nbsp;<i class="fa fa-plus-circle" style="font-size:16px; color:green"></i>&nbsp;
+            <i class="fa fa-minus-circle" style="font-size:16px; color:red"></i>&nbsp;
+            icons next to a topic or article indicate either a positive or negative opinion.
+        </p>
+    </div>
+    <div class="col-md-12 animate-box"><hr /></div>
+
+    <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <h3 class="fh5co-heading">Clustering Information</h3>
+        <div>Clusters: {{ cluster.clusters }}</div>
+        <div>News Articles: {{ cluster.articles }}</div>
+        <div>Vocabulary Size: {{ cluster.words }}</div>
+        <div>Updated: {{ cluster.last_update }} EST</div>
+    </div>
+    <div class="col-md-12"><hr /></div>
+    <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <div style="position: relative; overflow: hidden;" id="cluster_template"></div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            console.log("Fetching cluster graph.");
+            $.ajax({
+                type: "get",
+                url: "/about/graph",
+                beforeSend: function () {
+                    $("#cluster_template").html("Loading...");
+                },
+                success: function(data) {
+                    console.log("Got cluster graph..");
+                    $("#cluster_template").html(data);
+                 },
+                 error: function(error) {
+                    console.log("Error getting cluster graph: " + error);
+                    $("#cluster_template").html("Error getting cluster graph.");
+                }
+            });
+        });
+    </script>
+{% endblock %}

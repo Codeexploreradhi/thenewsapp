@@ -1,0 +1,26 @@
+
+{% extends "newsfeed/base.html" %}
+{% load staticfiles %}
+{% block menu %}
+    <ul>
+        <li><a href='/'>Read News</a></li>
+        <li><a href='/keywords'>Trending</a></li>
+        <li><a href='/about'>About</a></li>
+        <li class='fh5co-active'><a href='/sources'>Sources</a></li>
+    </ul>
+{% endblock %}
+{% block headerTitle %}Sources{% endblock %}
+{% block title %}Sources{% endblock %}
+
+{% block content %}
+    <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <!--<h3 class="fh5co-heading">Breakdown of Sources</h3>-->
+        <div>Number of Sources: {{ num_of_sources }}</div>
+    </div>
+    <div class="col-md-12"><hr /></div>
+    <div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
+        <div style="position: relative; overflow: hidden;">
+            {{ chart.as_html }}
+        </div>
+    </div>
+{% endblock %}

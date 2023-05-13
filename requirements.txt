@@ -1,0 +1,13 @@
+attrdict==2.0.0
+Django==1.11
+dj-database-url==0.4.2
+django-graphos==0.3.41
+django-robots==3.0
+django-sitemaps==1.0.1
+gunicorn==19.7.1
+psycopg2==2.7.1
+pymongo==3.4.0
+requests==2.13.0
+static==1.1.1
+static3==0.7.0
+whitenoise==3.3.0
